@@ -6,12 +6,29 @@ const transactionRoutes = require('./routes/transaction');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL || '*' : '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {})
-  .catch((err) => console.error(err));
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) return;
+  try {
+    const db = await mongoose.connect(process.env.MONGO_URI);
+    isConnected = db.connections[0].readyState === 1;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 app.use('/transactions', transactionRoutes);
 

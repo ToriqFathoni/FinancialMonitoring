@@ -23,8 +23,23 @@ const upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
   try {
-    const transactions = await Transaction.find().sort({ tanggal: -1 });
-    res.json(transactions);
+    const transactions = await Transaction.find()
+      .sort({ tanggal: -1 })
+      .select('-__v')
+      .lean();
+    res.status(200).json(transactions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedTransaction = await Transaction.findByIdAndDelete(req.params.id);
+    if (!deletedTransaction) {
+      return res.status(404).json({});
+    }
+    res.status(200).json(deletedTransaction);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

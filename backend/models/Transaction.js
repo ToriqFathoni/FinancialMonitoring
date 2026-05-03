@@ -24,4 +24,6 @@ const transactionSchema = new mongoose.Schema({
   }
 });
 
+transactionSchema.index({ tanggal: -1 });
+
 module.exports = mongoose.model('Transaction', transactionSchema);
