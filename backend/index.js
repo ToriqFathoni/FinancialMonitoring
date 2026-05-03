@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => {})
   .catch((err) => console.error(err));
 
-app.use('/api/transactions', transactionRoutes);
+app.use('/transactions', transactionRoutes);
 
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
