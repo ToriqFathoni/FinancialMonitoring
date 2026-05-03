@@ -7,9 +7,10 @@ import { Transaction, TransactionType } from '../types/transaction';
 interface Props {
   onClose: () => void;
   onSubmit: (formData: FormData) => void;
+  isSubmitting?: boolean;
 }
 
-export function TransactionModal({ onClose, onSubmit }: Props) {
+export function TransactionModal({ onClose, onSubmit, isSubmitting = false }: Props) {
   const [formData, setFormData] = useState({
     nominal: '',
     tipe: 'pengeluaran' as TransactionType,
@@ -189,9 +190,10 @@ export function TransactionModal({ onClose, onSubmit }: Props) {
               </button>
               <button
                 type="submit"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 shadow-sm"
+                disabled={isSubmitting}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2.5 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 shadow-sm"
               >
-                Simpan
+                {isSubmitting ? 'Menyimpan...' : 'Simpan'}
               </button>
             </div>
           </form>

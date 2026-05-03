@@ -10,6 +10,7 @@ import { TransactionModal } from '../components/TransactionModal';
 export default function Home() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchTransactions = async () => {
     try {
@@ -57,6 +58,7 @@ export default function Home() {
   };
 
   const handleAddTransaction = async (formData: FormData) => {
+    setIsSubmitting(true);
     try {
       const res = await fetch('/api/transactions', {
         method: 'POST',
@@ -69,6 +71,8 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -98,6 +102,7 @@ export default function Home() {
         <TransactionModal 
           onClose={() => setIsModalOpen(false)} 
           onSubmit={handleAddTransaction} 
+          isSubmitting={isSubmitting}
         />
       )}
     </div>
