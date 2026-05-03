@@ -13,7 +13,7 @@ export default function Home() {
 
   const fetchTransactions = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/transactions');
+      const res = await fetch('/api/transactions');
       if (res.ok) {
         const data = await res.json();
         setTransactions(data);
@@ -45,7 +45,7 @@ export default function Home() {
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/transactions/${id}`, {
+      const res = await fetch(`/api/transactions/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {
@@ -58,7 +58,7 @@ export default function Home() {
 
   const handleAddTransaction = async (formData: FormData) => {
     try {
-      const res = await fetch('http://localhost:5000/api/transactions', {
+      const res = await fetch('/api/transactions', {
         method: 'POST',
         body: formData,
       });

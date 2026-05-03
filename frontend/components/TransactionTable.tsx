@@ -66,7 +66,7 @@ export function TransactionTable({ transactions, onDelete }: Props) {
                     {trx.buktiTransfer ? (
                       <a 
                         href="#" 
-                        onClick={(e) => { e.preventDefault(); window.open(`http://localhost:5000/${trx.buktiTransfer}`, '_blank'); }}
+                        onClick={(e) => { e.preventDefault(); window.open(trx.buktiTransfer as string, '_blank'); }}
                         className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
                         title="Lihat Bukti"
                       >
